@@ -2,14 +2,25 @@ from ctypes import CDLL, c_ushort
 import os
 import platform
 
-if platform.architecture()[0] == "64bit":
-    lzoPath = f"{os.path.dirname(__file__)}/lzo64.dll"
-elif platform.architecture()[0] == "32bit":
-    lzoPath = f"{os.path.dirname(__file__)}/lzo32.dll"
+if platform.system() == 'Darwin':
+    if platform.architecture()[0] == '64bit':
+        lzoPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'lzo-2.10-arm64-mac.dylib')
+    elif platform.architecture()[0] == '32bit':
+        raise Exception('No LZO library for Darwin 32bit. Install lzo using homebrew ' +
+                        'Find lib directory with brew --cellar lzo command and find inside .dylib file')
+elif platform.system() == 'Windows':
+    if platform.architecture()[0] == '64bit':
+        lzoPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'lzo-x64-win.dll')
+    elif platform.architecture()[0] == '32bit':
+        lzoPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'lzo-x86-win.dll')
 else:
     raise Exception("Unknown Architecture")
 
-lzo = CDLL(lzoPath)
+try:
+    lzo = CDLL(lzoPath)
+except OSError:
+    raise Exception(f'Failed to load LZO library on path: "{lzoPath}".  Install lzo using homebrew ' +
+                    'Find lib directory with brew --cellar lzo command and find inside .dylib file')
 
 lzo1x = {0, 1}
 
