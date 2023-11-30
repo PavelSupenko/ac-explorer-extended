@@ -6,7 +6,7 @@
 import pyUbiForge.misc
 from plugins import right_click_plugins
 from typing import Union, Dict, List, Tuple
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 import time
 import os
 import json
@@ -144,7 +144,7 @@ class App(QtWidgets.QApplication):
 
 		self.main_window.show()
 		self.load_game(self.game_select.currentText())
-		self.exec_()
+		self.exec()
 
 	def translate_(self):
 		self.main_window.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "ACExplorer"))
@@ -358,7 +358,7 @@ class TreeView(QtWidgets.QTreeWidget):
 			forge_file.new_datafiles.clear()
 
 	def mousePressEvent(self, event: QtGui.QMouseEvent):
-		entry: TreeViewEntry = self.itemAt(event.pos())
+		entry: TreeViewEntry = self.itemAt(event.position())
 		if entry is not None and entry.depth == 3 and entry.childCount() == 0:
 			forge_file_name, datafile_id = entry.forge_file_name, entry.datafile_id
 			pyUbiForge.forge_files[forge_file_name].decompress_datafile(datafile_id)
