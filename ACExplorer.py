@@ -6,7 +6,7 @@
 import pyUbiForge.misc
 from plugins import right_click_plugins
 from typing import Union, Dict, List, Tuple, Optional
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 import time
 import os
 import json
@@ -144,7 +144,7 @@ class App(QtWidgets.QApplication):
 
 		self.main_window.show()
 		self.load_game(self.game_select.currentText())
-		self.exec_()
+		self.exec()
 
 	def translate_(self):
 		self.main_window.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "ACExplorer"))
@@ -372,7 +372,7 @@ class TreeView(QtWidgets.QTreeWidget):
 			plugin_names, file_id = right_click_plugins.query(entry.depth, unique_identifier, entry.forge_file_name, entry.datafile_id)
 			if len(plugin_names) > 0:
 				menu = ContextMenu(self.icons, plugin_names, file_id, entry.forge_file_name, entry.datafile_id)
-				menu.exec_(self.viewport().mapToGlobal(position))
+				menu.exec(self.viewport().mapToGlobal(position))
 			self.populate_tree()
 
 
@@ -601,7 +601,7 @@ class PluginOptionsScreen(QtWidgets.QDialog):
 		self._horizontal_layouts[-1].addWidget(self._cancel_button)
 
 		self.show()
-		self.exec_()
+		self.exec()
 
 	def reject(self):
 		self._escape = True
