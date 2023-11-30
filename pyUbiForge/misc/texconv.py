@@ -1,7 +1,9 @@
 import os
 import platform
 if platform.system() == 'Windows':
-	texconv_path = f'{os.path.dirname(__file__)}/../resources/texconv.exe'
+	texconv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'texconv.exe')
+elif platform.system() == 'Darwin':
+	texconv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'texconv.exe')
 else:
 	raise Exception('Unknown Architecture')
 
