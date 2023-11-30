@@ -6,6 +6,7 @@
 import pyUbiForge.misc
 from plugins import right_click_plugins
 from typing import Union, Dict, List, Tuple, Optional
+from PySide6.QtGui import QAction
 from PySide6 import QtCore, QtGui, QtWidgets
 import time
 import os
@@ -106,20 +107,20 @@ class App(QtWidgets.QApplication):
 		self.menubar.setObjectName("menubar")
 		self.main_window.setMenuBar(self.menubar)
 
-		self.menubar.addAction(
-			'Games',
-			lambda: self._show_games()
-		)
+		games_menu_item = self.menubar.addMenu('&Games')
+		games_action = QAction('&Games settings', self)
+		games_action.triggered.connect(lambda: self._show_games())
+		games_menu_item.addAction(games_action)
 
-		self.menubar.addAction(
-			'Options',
-			lambda: self._show_options()
-		)
+		options_menu_item = self.menubar.addMenu('&Options')
+		options_action = QAction('&General options', self)
+		options_action.triggered.connect(lambda: self._show_options())
+		options_menu_item.addAction(options_action)
 
-		self.menubar.addAction(
-			'Donate',
-			lambda: self._donate()
-		)
+		support_menu_item = self.menubar.addMenu('&Support')
+		support_action = QAction('&Donate', self)
+		support_action.triggered.connect(lambda: self._donate())
+		support_menu_item.addAction(support_action)
 
 		# statusbar
 		self.statusbar = QtWidgets.QStatusBar()
