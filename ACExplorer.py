@@ -358,7 +358,7 @@ class TreeView(QtWidgets.QTreeWidget):
 			forge_file.new_datafiles.clear()
 
 	def mousePressEvent(self, event: QtGui.QMouseEvent):
-		entry: TreeViewEntry = self.itemAt(event.position())
+		entry: TreeViewEntry = self.itemAt(event.pos())
 		if entry is not None and entry.depth == 3 and entry.childCount() == 0:
 			forge_file_name, datafile_id = entry.forge_file_name, entry.datafile_id
 			pyUbiForge.forge_files[forge_file_name].decompress_datafile(datafile_id)
@@ -372,7 +372,7 @@ class TreeView(QtWidgets.QTreeWidget):
 			plugin_names, file_id = right_click_plugins.query(entry.depth, unique_identifier, entry.forge_file_name, entry.datafile_id)
 			if len(plugin_names) > 0:
 				menu = ContextMenu(self.icons, plugin_names, file_id, entry.forge_file_name, entry.datafile_id)
-				menu.exec_(self.viewport().mapToGlobal(position))
+				menu.exec(self.viewport().mapToGlobal(position))
 			self.populate_tree()
 
 
@@ -595,7 +595,7 @@ class PluginOptionsScreen(QtWidgets.QDialog):
 		self._horizontal_layouts[-1].addWidget(self._cancel_button)
 
 		self.show()
-		self.exec_()
+		self.exec()
 
 	def reject(self):
 		self._escape = True
