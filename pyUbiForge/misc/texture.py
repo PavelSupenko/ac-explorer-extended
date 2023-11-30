@@ -44,12 +44,11 @@ class BaseTexture:
 			self.dwCaps3 + self.dwCaps4 + self.dwReserved2 + self.DXT10Header + self.buffer
 
 	def export_dds(self, path):
-		fi = open(path, 'wb')
-		fi.write(self.dds_string)
-		fi.close()
+		with open(path, 'wb') as fi:
+			fi.write(self.dds_string)
 
 		if self.imgDXT == 8:
-			arg = f'-fl 9.1 -y -o {pyUbiForge.CONFIG.get("dumpFolder", "output")} -f BC3_UNORM {path}'
+			arg = f'-fl 9.1 -y -o {os.path.dirname(path)} -f BC3_UNORM {path}'
 			texconv.convert_texture(arg)
 
 

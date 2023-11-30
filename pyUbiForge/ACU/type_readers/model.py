@@ -156,6 +156,14 @@ class Reader(BaseModel, BaseReader):
 				normals = vert_table['n']
 				if normals is not None:
 					self._normals = normals.astype(numpy.float64)
+				
+				bones = vert_table['bn']
+				if bones is not None:
+					self.bone_numbers = vert_table['bn']
+					self.bone_weights = vert_table['bw']
+				else:
+					self.bone_number = None
+
 				self.vert_table = vert_table
 
 				model_file.out_file_write('Face table\n')
