@@ -63,7 +63,7 @@ class Plugin(BasePlugin):
 						'faces': tuple(tuple(face) for face in model.faces[mesh_index][:m['face_count']])
 					})
 					for vtx in model.vert_table:
-						x, y = vtx['vt'].astype(numpy.float) / 2
+						x, y = vtx['vt'].astype(numpy.float64) / 2
 						for index, bone_index in enumerate(vtx['bn']):
 							if vtx['bw'][index] > 0:
 								draw = ImageDraw.Draw(cols[bone_index])

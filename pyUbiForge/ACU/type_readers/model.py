@@ -147,10 +147,10 @@ class Reader(BaseModel, BaseReader):
 					logging.warning(f'Not yet implemented!\n\nvertTableWidth = {vert_table_width}')
 					raise Exception()
 
-				self._vertices = vert_table['v'].astype(numpy.float) * numpy.sign(vert_table['sc'].reshape(-1, 1)) / 2 ** 15
+				self._vertices = vert_table['v'].astype(numpy.float64) * numpy.sign(vert_table['sc'].reshape(-1, 1)) / 2 ** 15
 				# self._vertices *= numpy.sum(bounding_box2, 0) / numpy.amax(self.vertices, 0)
 
-				self._texture_vertices = vert_table['vt'].astype(numpy.float) / 2048.0
+				self._texture_vertices = vert_table['vt'].astype(numpy.float64) / 2048.0
 				self._texture_vertices[:, 1] *= -1
 				if 'n' in vert_table:
 					self._normals = vert_table['n'].astype(numpy.float)
