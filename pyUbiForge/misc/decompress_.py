@@ -1,15 +1,21 @@
 from ctypes import CDLL, c_ushort
 import os
 import platform
-if platform.architecture()[0] == '64bit':
-	lzoPath = f'{os.path.dirname(__file__)}/../resources/lzo64.dll'
-elif platform.architecture()[0] == '32bit':
-	lzoPath = f'{os.path.dirname(__file__)}/../resources/lzo32.dll'
+
+if platform.system() == 'Darwin':
+	if platform.architecture()[0] == '64bit':
+		lzoPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'lzo-2.10-arm64-mac.dylib')
+	elif platform.architecture()[0] == '32bit':
+		raise Exception('No lZO library for Darwin 32bit')
+elif platform.system() == 'Windows':
+	if platform.architecture()[0] == '64bit':
+		lzoPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'lzo-x64-win.dll')
+	elif platform.architecture()[0] == '32bit':
+		lzoPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'lzo-x86-win.dll')
 else:
 	raise Exception('Unknown Architecture')
 
 lzo = CDLL(lzoPath)
-
 
 def decompress(mode: int, src: bytes, dst_len: int) -> bytes:
 	"""This is the function that does the actual decompression of the data"""
