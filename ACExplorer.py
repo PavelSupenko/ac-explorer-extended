@@ -61,14 +61,14 @@ class App(QtWidgets.QApplication):
 		self.game_select = QtWidgets.QComboBox()
 		self.game_select.setObjectName("game_select")
 		self.game_select.addItems(pyUbiForge.game_identifiers())
-		self.horizontal_layout.addWidget(self.game_select)
+		self.horizontal_layout.addWidget(self.game_select, 1)
 
 		# search box
 		self.search_box = QtWidgets.QLineEdit(placeholderText='Enter a search term.')
 		self.search_box.setClearButtonEnabled(True)
 		self.search_box.setObjectName("search_box")
 		self.search_box.textChanged.connect(self.search)
-		self.horizontal_layout.addWidget(self.search_box)
+		self.horizontal_layout.addWidget(self.search_box, 2)
 		self.match_case = QtWidgets.QCheckBox('Match Case')
 		self.match_case.stateChanged.connect(self.search)
 		self.horizontal_layout.addWidget(self.match_case)
