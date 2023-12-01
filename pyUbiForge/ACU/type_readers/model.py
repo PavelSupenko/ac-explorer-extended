@@ -153,15 +153,15 @@ class Reader(BaseModel, BaseReader):
 				self._texture_vertices = vert_table['vt'].astype(numpy.float64) / 2048.0
 				self._texture_vertices[:, 1] *= -1
 
-				normals = vert_table['n']
-				if normals is not None:
-					self._normals = normals.astype(numpy.float64)
-				
-				bones = vert_table['bn']
-				if bones is not None:
+				try:
+					self._normals = vert_table.get('n').astype(numpy.float64)
+				except:
+					self._normals = None
+
+				try:
 					self.bone_numbers = vert_table['bn']
 					self.bone_weights = vert_table['bw']
-				else:
+				except:
 					self.bone_number = None
 
 				self.vert_table = vert_table
